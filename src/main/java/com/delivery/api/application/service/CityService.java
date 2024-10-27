@@ -1,6 +1,7 @@
 package com.delivery.api.application.service;
 
 import com.delivery.api.domain.entity.City;
+import com.delivery.api.domain.exception.EntityNotFound;
 import com.delivery.api.domain.repository.CityRepository;
 import com.delivery.api.infra.persistence.jpa_entity.CityPersistence;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,5 +26,9 @@ public class CityService {
         return CityPersistence.convertCityPersistenceToCity(cityPersistence);
     }
 
+    public City findCity(Long cityId){
+        CityPersistence cityPersistence = this.cityRepository.findById(cityId).orElseThrow(() -> new EntityNotFound("City not found"));
+        return CityPersistence.convertCityPersistenceToCity(cityPersistence);
+    }
 
 }
