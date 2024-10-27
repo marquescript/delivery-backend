@@ -1,5 +1,6 @@
 package com.delivery.api.infra.persistence.jpa_entity;
 
+import com.delivery.api.domain.entity.City;
 import jakarta.persistence.*;
 
 @Entity
@@ -20,6 +21,22 @@ public class CityPersistence {
         this.id = id;
         this.name = name;
         this.statePersistence = statePersistence;
+    }
+
+    public static CityPersistence convertCityToCityPersistence(City city) {
+        return new CityPersistence(
+                city.getId(),
+                city.getName(),
+                StatePersistence.convertStateToStatePersistence(city.getState())
+        );
+    }
+
+    public static City convertCityPersistenceToCity(CityPersistence cityPersistence) {
+        return new City(
+                cityPersistence.getId(),
+                cityPersistence.getName(),
+                StatePersistence.convertStatePersistenceToState(cityPersistence.getStatePersistence())
+        );
     }
 
     public CityPersistence() {}
