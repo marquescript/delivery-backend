@@ -1,4 +1,4 @@
-package com.delivery.api.application;
+package com.delivery.api.application.service;
 
 import com.delivery.api.domain.entity.Address;
 import com.delivery.api.domain.repository.AddressRepository;
