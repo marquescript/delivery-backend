@@ -1,6 +1,7 @@
 package com.delivery.api.application.service;
 
 import com.delivery.api.domain.entity.State;
+import com.delivery.api.domain.exception.EntityNotFound;
 import com.delivery.api.domain.repository.StateRepository;
 import com.delivery.api.infra.persistence.jpa_entity.StatePersistence;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,11 @@ public class StateService {
             @Qualifier("jpa") StateRepository<StatePersistence> stateRepository
     ){
             this.stateRepository = stateRepository;
+    }
+
+    public State findState(Long stateId){
+        StatePersistence statePersistence = this.stateRepository.findById(stateId).orElseThrow(() -> new EntityNotFound("State not found"));
+        return StatePersistence.convertStatePersistenceToState(statePersistence);
     }
 
     public State createState(State state){
