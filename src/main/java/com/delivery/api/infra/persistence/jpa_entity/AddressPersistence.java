@@ -1,5 +1,6 @@
 package com.delivery.api.infra.persistence.jpa_entity;
 
+import com.delivery.api.domain.entity.Address;
 import jakarta.persistence.*;
 
 @Entity
@@ -36,6 +37,30 @@ public class AddressPersistence {
     }
 
     public AddressPersistence() {}
+
+    public static AddressPersistence convertAddressToAddressPersistence(Address address) {
+        return new AddressPersistence(
+                address.getId(),
+                address.getCep(),
+                address.getPublicPlace(),
+                address.getNumber(),
+                address.getComplement(),
+                address.getNeighborhood(),
+                CityPersistence.convertCityToCityPersistence(address.getCity())
+        );
+    }
+
+    public static Address convertAddressPersistenceToAddress(AddressPersistence addressPersistence) {
+        return new Address(
+                addressPersistence.getId(),
+                addressPersistence.getCep(),
+                addressPersistence.getPublicPlace(),
+                addressPersistence.getNumber(),
+                addressPersistence.getComplement(),
+                addressPersistence.getNeighborhood(),
+                CityPersistence.convertCityPersistenceToCity(addressPersistence.getCityPersistence())
+        );
+    }
 
     public Long getId() {
         return id;
