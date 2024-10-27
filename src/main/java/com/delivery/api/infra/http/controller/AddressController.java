@@ -2,6 +2,7 @@ package com.delivery.api.infra.http.controller;
 
 import com.delivery.api.application.use_cases._factory.AddressUseCase;
 import com.delivery.api.domain.entity.Address;
+import com.delivery.api.infra.http.dto.AddressRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,8 +25,8 @@ public class AddressController {
     }
 
     @PostMapping
-    public ResponseEntity<Address> createAddress(@RequestBody Address address){
-        address = this.addressUseCase.createAddressUseCase(address);
+    public ResponseEntity<Address> createAddress(@RequestBody AddressRequest addressRequest){
+        Address address = this.addressUseCase.createAddressUseCase(addressRequest);
         return ResponseEntity.status(HttpStatus.CREATED).body(address);
     }
 
