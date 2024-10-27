@@ -18,7 +18,7 @@ public record AddressRequest(
         @NotBlank
         String neighborhood,
         @NotNull
-        City city
+        CityRequest city
 ) {
 
     public static Address convertToEntity(AddressRequest addressRequest){
@@ -29,7 +29,7 @@ public record AddressRequest(
                 addressRequest.number,
                 addressRequest.complement,
                 addressRequest.neighborhood,
-                addressRequest.city
+                CityRequest.convertDtoToEntity(addressRequest.city)
         );
     }
 

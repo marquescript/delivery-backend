@@ -3,6 +3,7 @@ package com.delivery.api.application.use_cases._factory;
 import com.delivery.api.application.use_cases.city.CreateCity;
 import com.delivery.api.application.use_cases.city.FindCity;
 import com.delivery.api.domain.entity.City;
+import com.delivery.api.infra.http.dto.CityRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -21,8 +22,8 @@ public class CityUseCase {
             this.findCity = findCity;
     }
 
-    public City createCityUseCase(City city){
-        return this.createCity.execute(city);
+    public City createCityUseCase(CityRequest cityRequest){
+        return this.createCity.execute(cityRequest);
     }
 
     public City findCityUseCase(Long id){
