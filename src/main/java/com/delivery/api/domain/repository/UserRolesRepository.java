@@ -1,6 +1,6 @@
 package com.delivery.api.domain.repository;
 
-public interface UserRoles <T>{
+public interface UserRolesRepository<T>{
 
     T save(T entity);
     T findByName(String name);

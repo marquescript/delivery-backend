@@ -1,4 +1,4 @@
-package com.delivery.api.infra.persistence.entity;
+package com.delivery.api.infra.persistence.jpa_entity;
 
 import com.delivery.api.domain.enums.UserRoleEnum;
 import jakarta.persistence.*;
