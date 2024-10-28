@@ -6,10 +6,7 @@ import com.delivery.api.infra.http.dto.CityRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/city")
@@ -22,6 +19,12 @@ public class CityController {
             CityUseCase cityUseCase
     ){
             this.cityUseCase = cityUseCase;
+    }
+
+    @GetMapping("/{cityId}")
+    public ResponseEntity<City> findCity(@PathVariable Long cityId){
+        City city = this.cityUseCase.findCityUseCase(cityId);
+        return ResponseEntity.status(HttpStatus.OK).body(city);
     }
 
     @PostMapping
