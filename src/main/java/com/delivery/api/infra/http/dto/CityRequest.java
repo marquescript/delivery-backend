@@ -10,14 +10,14 @@ public record CityRequest(
         @NotBlank
         String name,
         @NotNull
-        State State
+        StateRequest state
 ){
 
     public static City convertDtoToEntity(CityRequest cityRequest){
         return new City(
                 cityRequest.id,
                 cityRequest.name,
-                cityRequest.State
+                StateRequest.convertDtoToEntity(cityRequest.state)
         );
     }
 

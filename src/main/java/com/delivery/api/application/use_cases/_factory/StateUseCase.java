@@ -3,6 +3,7 @@ package com.delivery.api.application.use_cases._factory;
 import com.delivery.api.application.use_cases.state.CreateState;
 import com.delivery.api.application.use_cases.state.FindState;
 import com.delivery.api.domain.entity.State;
+import com.delivery.api.infra.http.dto.StateRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -21,8 +22,8 @@ public class StateUseCase {
             this.findState = findState;
     }
 
-    public State createStateUseCase(State state){
-        return this.createState.execute(state);
+    public State createStateUseCase(StateRequest stateRequest){
+        return this.createState.execute(stateRequest);
     }
 
     public State findStateUseCase(Long stateId){

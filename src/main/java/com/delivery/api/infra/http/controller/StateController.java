@@ -2,6 +2,7 @@ package com.delivery.api.infra.http.controller;
 
 import com.delivery.api.application.use_cases._factory.StateUseCase;
 import com.delivery.api.domain.entity.State;
+import com.delivery.api.infra.http.dto.StateRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,8 +25,8 @@ public class StateController {
     }
 
     @PostMapping
-    public ResponseEntity<State> createState(@RequestBody State state){
-        state = this.stateUseCase.createStateUseCase(state);
+    public ResponseEntity<State> createState(@RequestBody StateRequest stateRequest){
+        State state = this.stateUseCase.createStateUseCase(stateRequest);
         return ResponseEntity.status(HttpStatus.CREATED).body(state);
     }
 
