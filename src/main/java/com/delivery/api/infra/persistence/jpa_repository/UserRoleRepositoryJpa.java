@@ -9,4 +9,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 @Qualifier("jpa")
 public interface UserRoleRepositoryJpa extends JpaRepository<UserRolePersistence, Long>, UserRolesRepository<UserRolePersistence> {
+
 }

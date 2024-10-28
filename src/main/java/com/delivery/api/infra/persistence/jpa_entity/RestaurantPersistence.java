@@ -8,7 +8,6 @@ import java.util.List;
 
 @Entity
 @Table(name = "restaurant")
-
 public class RestaurantPersistence {
 
     @Id

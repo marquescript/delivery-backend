@@ -9,7 +9,5 @@ public interface RestaurantRepository<T> {
     Optional<T> findById(Long id);
     T save(T entity);
     void deleteById(Long id);
-    List<T> findRestaurantByCity(Long cityId, int page, int size);
-    List<T> findByCityIdAndKitchenId(Long cityId, Long kitchenId, int page, int size);
 
 }

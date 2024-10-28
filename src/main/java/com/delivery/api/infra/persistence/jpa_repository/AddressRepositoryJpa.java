@@ -14,6 +14,10 @@ import java.util.List;
 @Qualifier("jpa")
 public interface AddressRepositoryJpa extends JpaRepository<AddressPersistence, Long>, AddressRepository<AddressPersistence> {
 
-
+    @Override
+    default List<AddressPersistence> findAll(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return findAll(pageable).getContent();
+    }
 
 }
