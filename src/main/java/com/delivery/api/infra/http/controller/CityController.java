@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/city")
 public class CityController {
@@ -25,6 +27,12 @@ public class CityController {
     public ResponseEntity<City> findCity(@PathVariable Long cityId){
         City city = this.cityUseCase.findCityUseCase(cityId);
         return ResponseEntity.status(HttpStatus.OK).body(city);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<City>> findAllCities(@RequestParam(value = "page", defaultValue = "0") int page, @RequestParam(value = "size", defaultValue = "10") int size){
+        List<City> cities = this.cityUseCase.findAllCitiesUseCase(page, size);
+        return ResponseEntity.status(HttpStatus.OK).body(cities);
     }
 
     @PostMapping
