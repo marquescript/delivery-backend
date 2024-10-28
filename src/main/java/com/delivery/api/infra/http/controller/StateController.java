@@ -6,10 +6,7 @@ import com.delivery.api.infra.http.dto.StateRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/state")
@@ -24,11 +21,18 @@ public class StateController {
             this.stateUseCase = stateUseCase;
     }
 
+    @GetMapping("/{stateId}")
+    public ResponseEntity<State> findState(@PathVariable Long stateId){
+        State state = this.stateUseCase.findStateUseCase(stateId);
+        return ResponseEntity.status(HttpStatus.OK).body(state);
+    }
+
     @PostMapping
     public ResponseEntity<State> createState(@RequestBody StateRequest stateRequest){
         State state = this.stateUseCase.createStateUseCase(stateRequest);
         return ResponseEntity.status(HttpStatus.CREATED).body(state);
     }
+
 
 
 }
