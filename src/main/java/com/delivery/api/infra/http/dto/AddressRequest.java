@@ -1,7 +1,6 @@
 package com.delivery.api.infra.http.dto;
 
 import com.delivery.api.domain.entity.Address;
-import com.delivery.api.domain.entity.City;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;

@@ -1,5 +1,6 @@
 package com.delivery.api.infra.persistence.jpa_entity;
 
+import com.delivery.api.domain.entity.Restaurant;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
@@ -17,7 +18,7 @@ public class RestaurantPersistence {
     private String name;
 
     @Column(name = "shipping_fee")
-    private BigDecimal shippingFee;
+    private Double shippingFee;
 
     private Boolean active;
 
@@ -37,13 +38,29 @@ public class RestaurantPersistence {
     @OneToMany(mappedBy = "restaurantPersistence")
     private List<ProductPersistence> productPersistences = new ArrayList<>();
 
-    public RestaurantPersistence(Long id, String name, BigDecimal shippingFee, Boolean active, KitchenPersistence kitchenPersistence, AddressPersistence addressPersistence) {
+    public RestaurantPersistence(Long id, String name, Double shippingFee, Boolean active, KitchenPersistence kitchenPersistence, AddressPersistence addressPersistence) {
         this.id = id;
         this.name = name;
         this.shippingFee = shippingFee;
         this.active = active;
         this.kitchenPersistence = kitchenPersistence;
         this.addressPersistence = addressPersistence;
+    }
+
+    public static RestaurantPersistence convertRestaurantToRestaurantPersistence(Restaurant restaurant) {
+        return new RestaurantPersistence(
+                restaurant.getId(), restaurant.getName(), restaurant.getShippingFee(), restaurant.getActive(),
+                KitchenPersistence.convertKitchenToKitchenPersistence(restaurant.getKitchen()),
+                AddressPersistence.convertAddressToAddressPersistence(restaurant.getAddress())
+        );
+    }
+
+    public static Restaurant convertRestaurantPersistenceToRestaurant(RestaurantPersistence restaurantPersistence) {
+        return new Restaurant(
+                restaurantPersistence.getId(), restaurantPersistence.getName(), restaurantPersistence.getShippingFee(),
+                restaurantPersistence.getActive(), KitchenPersistence.convertKitchenPersistenceToKitchen(restaurantPersistence.getKitchenPersistence()),
+                AddressPersistence.convertAddressPersistenceToAddress(restaurantPersistence.getAddressPersistence())
+        );
     }
 
     public RestaurantPersistence() {}
@@ -72,11 +89,11 @@ public class RestaurantPersistence {
         this.name = name;
     }
 
-    public BigDecimal getShippingFee() {
+    public Double getShippingFee() {
         return shippingFee;
     }
 
-    public void setShippingFee(BigDecimal shippingFee) {
+    public void setShippingFee(Double shippingFee) {
         this.shippingFee = shippingFee;
     }
 

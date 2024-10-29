@@ -1,5 +1,6 @@
 package com.delivery.api.infra.persistence.jpa_entity;
 
+import com.delivery.api.domain.entity.Kitchen;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
@@ -27,6 +28,20 @@ public class KitchenPersistence {
 
     public void addRestaurantPersistence(RestaurantPersistence restaurantPersistence) {
         this.restaurantPersistence.add(restaurantPersistence);
+    }
+
+    public static KitchenPersistence convertKitchenToKitchenPersistence(Kitchen kitchen) {
+        KitchenPersistence kitchenPersistence = new KitchenPersistence(kitchen.getId(), kitchen.getName());
+        kitchen.getRestaurants()
+                .forEach(restaurant -> kitchenPersistence.addRestaurantPersistence(RestaurantPersistence.convertRestaurantToRestaurantPersistence(restaurant)));
+        return kitchenPersistence;
+    }
+
+    public static Kitchen convertKitchenPersistenceToKitchen(KitchenPersistence kitchenPersistence) {
+        Kitchen kitchen = new Kitchen(kitchenPersistence.getId(), kitchenPersistence.getName());
+        kitchenPersistence.getRestaurantPersistence()
+                .forEach(restaurantPersistence -> kitchen.addRestaurant(RestaurantPersistence.convertRestaurantPersistenceToRestaurant(restaurantPersistence)));
+        return kitchen;
     }
 
     public Long getId() {
