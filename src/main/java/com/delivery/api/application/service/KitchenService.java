@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class KitchenService {
 
@@ -24,6 +26,11 @@ public class KitchenService {
     public Kitchen findKitchen(Long kitchenId){
         KitchenPersistence kitchenPersistence = this.kitchenRepository.findById(kitchenId).orElseThrow(() -> new EntityNotFound("Kitchen not found"));
         return KitchenPersistence.convertKitchenPersistenceToKitchen(kitchenPersistence);
+    }
+
+    public List<Kitchen> findAllKitchens(int page, int size){
+        List<KitchenPersistence> kitchenPersistences = this.kitchenRepository.findAll(page, size);
+        return kitchenPersistences.stream().map(KitchenPersistence::convertKitchenPersistenceToKitchen).toList();
     }
 
 }
