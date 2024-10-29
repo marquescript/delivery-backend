@@ -50,4 +50,10 @@ public class KitchenService {
         return KitchenPersistence.convertKitchenPersistenceToKitchen(kitchenPersistence);
     }
 
+    @Transactional
+    public void deleteKitchen(Long kitchenId){
+        this.findKitchen(kitchenId);
+        this.kitchenRepository.deleteById(kitchenId);
+    }
+
 }
