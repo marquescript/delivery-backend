@@ -45,6 +45,14 @@ public class RestaurantService {
         return RestaurantPersistence.convertRestaurantPersistenceToRestaurant(restaurantPersistence);
     }
 
-
+    @Transactional
+    public void changeRestaurantOperatingStatus(Long restaurantId, Boolean status){
+        Restaurant restaurant = this.findRestaurant(restaurantId);
+        if(restaurant.getActive() != status){
+            restaurant.setActive(status);
+            RestaurantPersistence restaurantPersistence = RestaurantPersistence.convertRestaurantToRestaurantPersistence(restaurant);
+            this.restaurantRepository.save(restaurantPersistence);
+        }
+    }
 
 }
