@@ -55,4 +55,12 @@ public class RestaurantService {
         }
     }
 
+    public Restaurant updateRestaurant(Long restaurantId, Restaurant restaurant){
+        this.findRestaurant(restaurantId);
+        restaurant.setId(restaurantId);
+        RestaurantPersistence restaurantPersistence = RestaurantPersistence.convertRestaurantToRestaurantPersistence(restaurant);
+        restaurantPersistence = this.restaurantRepository.save(restaurantPersistence);
+        return RestaurantPersistence.convertRestaurantPersistenceToRestaurant(restaurantPersistence);
+    }
+
 }
