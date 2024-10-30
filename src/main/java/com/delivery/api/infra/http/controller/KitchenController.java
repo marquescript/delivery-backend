@@ -2,6 +2,7 @@ package com.delivery.api.infra.http.controller;
 
 import com.delivery.api.application.use_cases._factory.KitchenUseCase;
 import com.delivery.api.domain.entity.Kitchen;
+import com.delivery.api.infra.http.dto.KitchenRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -36,14 +37,14 @@ public class KitchenController {
     }
 
     @PostMapping
-    public ResponseEntity<Kitchen> saveKitchen(@RequestBody Kitchen kitchen){
-        Kitchen savedKitchen = this.kitchenUseCase.createKitchenUseCase(kitchen);
+    public ResponseEntity<Kitchen> saveKitchen(@RequestBody KitchenRequest kitchenRequest){
+        Kitchen savedKitchen = this.kitchenUseCase.createKitchenUseCase(kitchenRequest);
         return ResponseEntity.status(HttpStatus.CREATED).body(savedKitchen);
     }
 
     @PutMapping("/{kitchenId}")
-    public ResponseEntity<Kitchen> updateKitchen(@PathVariable Long kitchenId, @RequestBody Kitchen kitchen){
-        Kitchen updatedKitchen = this.kitchenUseCase.updateKitchenUseCase(kitchenId, kitchen);
+    public ResponseEntity<Kitchen> updateKitchen(@PathVariable Long kitchenId, @RequestBody KitchenRequest kitchenRequest){
+        Kitchen updatedKitchen = this.kitchenUseCase.updateKitchenUseCase(kitchenId, kitchenRequest);
         return ResponseEntity.status(HttpStatus.OK).body(updatedKitchen);
     }
 

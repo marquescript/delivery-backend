@@ -2,6 +2,7 @@ package com.delivery.api.application.use_cases._factory;
 
 import com.delivery.api.application.use_cases.kitchen.*;
 import com.delivery.api.domain.entity.Kitchen;
+import com.delivery.api.infra.http.dto.KitchenRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -39,12 +40,12 @@ public class KitchenUseCase {
         return this.findAllKitchens.execute(page, size);
     }
 
-    public Kitchen createKitchenUseCase(Kitchen kitchen){
-        return this.createKitchen.execute(kitchen);
+    public Kitchen createKitchenUseCase(KitchenRequest kitchenRequest){
+        return this.createKitchen.execute(kitchenRequest);
     }
 
-    public Kitchen updateKitchenUseCase(Long kitchenId, Kitchen kitchen){
-        return this.updateKitchen.execute(kitchenId, kitchen);
+    public Kitchen updateKitchenUseCase(Long kitchenId, KitchenRequest kitchenRequest){
+        return this.updateKitchen.execute(kitchenId, kitchenRequest);
     }
 
     public void deleteKitchenUseCase(Long kitchenId){
