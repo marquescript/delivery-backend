@@ -22,13 +22,13 @@ public record AddressRequest(
 
     public static Address convertToEntity(AddressRequest addressRequest){
         return new Address(
-                addressRequest.id,
-                addressRequest.cep,
-                addressRequest.publicPlace,
-                addressRequest.number,
-                addressRequest.complement,
-                addressRequest.neighborhood,
-                CityRequest.convertDtoToEntity(addressRequest.city)
+                addressRequest.id(),
+                addressRequest.cep(),
+                addressRequest.publicPlace(),
+                addressRequest.number(),
+                addressRequest.complement(),
+                addressRequest.neighborhood(),
+                CityRequest.convertDtoToEntity(addressRequest.city())
         );
     }
 

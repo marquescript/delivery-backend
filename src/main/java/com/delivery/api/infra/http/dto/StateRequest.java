@@ -11,8 +11,8 @@ public record StateRequest(
 
     public static State convertDtoToEntity(StateRequest stateRequest){
         return new State(
-                stateRequest.id,
-                stateRequest.name
+                stateRequest.id(),
+                stateRequest.name()
         );
     }
 

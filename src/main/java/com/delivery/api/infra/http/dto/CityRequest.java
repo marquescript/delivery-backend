@@ -15,9 +15,9 @@ public record CityRequest(
 
     public static City convertDtoToEntity(CityRequest cityRequest){
         return new City(
-                cityRequest.id,
-                cityRequest.name,
-                StateRequest.convertDtoToEntity(cityRequest.state)
+                cityRequest.id(),
+                cityRequest.name(),
+                StateRequest.convertDtoToEntity(cityRequest.state())
         );
     }
 
