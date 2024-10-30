@@ -1,5 +1,6 @@
 package com.delivery.api.infra.persistence.jpa_entity;
 
+import com.delivery.api.domain.entity.Product;
 import jakarta.persistence.*;
 
 @Entity
@@ -34,6 +35,22 @@ public class ProductPersistence {
         this.active = active;
         this.categoryProductPersistence = categoryProductPersistence;
         this.restaurantPersistence = restaurantPersistence;
+    }
+
+    public static ProductPersistence convertProductToProductPersistence(Product product) {
+        return new ProductPersistence(
+                product.getId(), product.getName(), product.getDescription(), product.getPrice(), product.getActive(),
+                CategoryProductPersistence.convertCategoryProductToCategoryProductPersistence(product.getCategoryProduct()),
+                RestaurantPersistence.convertRestaurantToRestaurantPersistence(product.getRestaurant())
+        );
+    }
+
+    public static Product convertProductPersistenceToProduct(ProductPersistence productPersistence) {
+        return new Product(
+                productPersistence.getId(), productPersistence.getName(), productPersistence.getDescription(), productPersistence.getPrice(),
+                productPersistence.getActive(), CategoryProductPersistence.convertCategoryProductPersistenceToCategoryProduct(productPersistence.getCategoryProductPersistence()),
+                RestaurantPersistence.convertRestaurantPersistenceToRestaurant(productPersistence.getRestaurantPersistence())
+        );
     }
 
     public ProductPersistence() {}

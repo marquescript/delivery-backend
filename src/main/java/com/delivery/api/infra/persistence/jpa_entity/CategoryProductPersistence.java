@@ -1,5 +1,6 @@
 package com.delivery.api.infra.persistence.jpa_entity;
 
+import com.delivery.api.domain.entity.CategoryProduct;
 import jakarta.persistence.*;
 
 @Entity
@@ -18,6 +19,14 @@ public class CategoryProductPersistence {
     }
 
     public CategoryProductPersistence() {}
+
+    public static CategoryProductPersistence convertCategoryProductToCategoryProductPersistence(CategoryProduct categoryProduct) {
+        return new CategoryProductPersistence(categoryProduct.getId(), categoryProduct.getName());
+    }
+
+    public static CategoryProduct convertCategoryProductPersistenceToCategoryProduct(CategoryProductPersistence categoryProductPersistence) {
+        return new CategoryProduct(categoryProductPersistence.getId(), categoryProductPersistence.getName());
+    }
 
     public Long getId() {
         return id;
