@@ -8,4 +8,5 @@ public interface GroupsValidation {
     public interface GetAddressId{};
     public interface GetCategoryProductId{};
     public interface GetRestaurantId{}
+    public interface GetProductId{};
 }

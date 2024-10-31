@@ -6,6 +6,7 @@ import com.delivery.api.application.service.RestaurantService;
 import com.delivery.api.domain.entity.Order;
 import com.delivery.api.domain.entity.Product;
 import com.delivery.api.domain.entity.Restaurant;
+import com.delivery.api.infra.http.dto.OrderRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -27,7 +28,9 @@ public class CreateOrder {
             this.productService = productService;
     }
 
-    public Order execute(Order order){
+    public Order execute(OrderRequest orderRequest){
+
+        Order order = OrderRequest.convertDtoToEntity(orderRequest);
 
         Restaurant restaurant = this.restaurantService.findRestaurant(order.getRestaurant().getId());
 
