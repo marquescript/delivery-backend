@@ -1,21 +1,33 @@
 package com.delivery.api.infra.http.dto;
 
-import com.delivery.api.domain.entity.CategoryProduct;
 import com.delivery.api.domain.entity.Product;
+import com.delivery.api.infra.http.handler.validation.GroupsValidation;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.groups.ConvertGroup;
+import jakarta.validation.groups.Default;
 
 public record ProductRequest(
         Long id,
 
+        @NotBlank
         String name,
 
+        @NotBlank
         String description,
 
+        @Min(1)
         Double price,
 
         Boolean active,
 
-        CategoryProduct categoryProduct,
+        @Valid
+        @ConvertGroup(from = Default.class, to = GroupsValidation.GetCategoryProductId.class)
+        CategoryProductRequest category,
 
+        @Valid
+        @ConvertGroup(from = Default.class, to = GroupsValidation.GetRestaurantId.class)
         RestaurantRequest restaurant
 
 ) {
@@ -27,7 +39,7 @@ public record ProductRequest(
                 productRequest.description(),
                 productRequest.price(),
                 productRequest.active(),
-                productRequest.categoryProduct(),
+                CategoryProductRequest.convertDtoToEntity(productRequest.category()),
                 RestaurantRequest.convertDtoToEntity(productRequest.restaurant())
         );
     }

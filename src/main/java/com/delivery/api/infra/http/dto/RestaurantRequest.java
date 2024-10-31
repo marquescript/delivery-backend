@@ -11,6 +11,7 @@ import jakarta.validation.groups.Default;
 
 public record RestaurantRequest(
 
+        @NotNull(groups = GroupsValidation.GetRestaurantId.class)
         Long id,
 
         @NotBlank

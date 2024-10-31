@@ -6,4 +6,6 @@ public interface GroupsValidation {
     public interface GetStateId{};
     public interface GetKitchenId{};
     public interface GetAddressId{};
+    public interface GetCategoryProductId{};
+    public interface GetRestaurantId{}
 }
