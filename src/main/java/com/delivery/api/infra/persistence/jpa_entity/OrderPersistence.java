@@ -1,5 +1,6 @@
 package com.delivery.api.infra.persistence.jpa_entity;
 
+import com.delivery.api.domain.entity.Order;
 import com.delivery.api.domain.enums.OrderStatus;
 import com.delivery.api.domain.enums.PaymentMethod;
 import jakarta.persistence.*;
@@ -75,11 +76,51 @@ public class OrderPersistence {
         this.paymentMethod = paymentMethod;
     }
 
+    public OrderPersistence() {}
+
     public void addItemOrderPersistence(ItemOrderPersistence itemOrderPersistence) {
         this.itemOrderPersistence.add(itemOrderPersistence);
     }
 
-    public OrderPersistence() {}
+    public static OrderPersistence convertOrderToOrderPersistence(Order order) {
+        OrderPersistence orderPersistence = new OrderPersistence(
+                order.getId(),
+                order.getSubTotal(),
+                order.getShippingFee(),
+                order.getTotalValue(),
+                order.getCreationDate(),
+                order.getConfirmationDate(),
+                order.getCancellationDate(),
+                order.getDeliveryDate(),
+                order.getOrderStatus(),
+                null,
+                RestaurantPersistence.convertRestaurantToRestaurantPersistence(order.getRestaurant()),
+                AddressPersistence.convertAddressToAddressPersistence(order.getAddress()),
+                order.getPaymentMethod()
+        );
+        order.getItemOrders().forEach(item -> orderPersistence.addItemOrderPersistence(ItemOrderPersistence.convertItemOrderToItemOrderPersistence(item)));
+        return orderPersistence;
+    }
+
+    public static Order convertOrderPersistenceToOrder(OrderPersistence orderPersistence) {
+        Order order = new Order(
+                orderPersistence.getId(),
+                orderPersistence.getSubtotal(),
+                orderPersistence.getShippingFee(),
+                orderPersistence.getTotalValue(),
+                orderPersistence.getCreationDate(),
+                orderPersistence.getConfirmationDate(),
+                orderPersistence.getCancellationDate(),
+                orderPersistence.getDeliveryDate(),
+                orderPersistence.getOrderStatus(),
+                null,
+                RestaurantPersistence.convertRestaurantPersistenceToRestaurant(orderPersistence.getRestaurantPersistence()),
+                AddressPersistence.convertAddressPersistenceToAddress(orderPersistence.getAddressPersistence()),
+                orderPersistence.getPaymentMethod()
+        );
+        orderPersistence.getItemOrderPersistence().forEach(item -> order.addItemOrder(ItemOrderPersistence.convertItemOrderPersistenceToItemOrder(item)));
+        return order;
+    }
 
     public Long getId() {
         return id;

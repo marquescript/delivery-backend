@@ -1,5 +1,6 @@
 package com.delivery.api.infra.persistence.jpa_entity;
 
+import com.delivery.api.domain.entity.ItemOrder;
 import jakarta.persistence.*;
 
 @Entity
@@ -39,6 +40,30 @@ public class ItemOrderPersistence {
     }
 
     public ItemOrderPersistence() {}
+
+    public static ItemOrderPersistence convertItemOrderToItemOrderPersistence(ItemOrder itemOrder) {
+        return new ItemOrderPersistence(
+                itemOrder.getId(),
+                itemOrder.getQuantity(),
+                itemOrder.getUnitPrice(),
+                itemOrder.getTotalPrice(),
+                itemOrder.getObservation(),
+                OrderPersistence.convertOrderToOrderPersistence(itemOrder.getOrder()),
+                ProductPersistence.convertProductToProductPersistence(itemOrder.getProduct())
+        );
+    }
+
+    public static ItemOrder convertItemOrderPersistenceToItemOrder(ItemOrderPersistence itemOrderPersistence) {
+        return new ItemOrder(
+                itemOrderPersistence.getId(),
+                itemOrderPersistence.getQuantity(),
+                itemOrderPersistence.getUnitPrice(),
+                itemOrderPersistence.getTotalPrice(),
+                itemOrderPersistence.getObservation(),
+                OrderPersistence.convertOrderPersistenceToOrder(itemOrderPersistence.getOrderPersistence()),
+                ProductPersistence.convertProductPersistenceToProduct(itemOrderPersistence.getProductPersistence())
+        );
+    }
 
     public Long getId() {
         return id;

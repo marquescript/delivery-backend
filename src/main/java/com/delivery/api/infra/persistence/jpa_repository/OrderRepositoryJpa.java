@@ -11,18 +11,23 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 @Qualifier("jpa")
 public interface OrderRepositoryJpa extends JpaRepository<OrderPersistence, Long>, OrderRepository<OrderPersistence> {
 
-    @Query("FROM OrderPersistence o WHERE o.id = :restaurantId ORDER BY o.creationDate DESC")
-    List<OrderPersistence> findAllByRestaurante(Long restaurantId, Pageable pageable);
+    @Query("FROM OrderPersistence o WHERE o.restaurantPersistence.id = :restaurantId ORDER BY o.creationDate ASC")
+    List<OrderPersistence> findOrdersByRestaurant(Long restaurantId, Pageable pageable);
 
     @Override
-    default List<OrderPersistence> findAll(Long restaurantId, int page, int size) {
+    default List<OrderPersistence> findOrdersByRestaurant(Long restaurantId, int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
-        return findAllByRestaurante(restaurantId, pageable);
+        return findOrdersByRestaurant(restaurantId, pageable);
     }
+
+    @Query("FROM OrderPersistence o WHERE o.restaurantPersistence.id = :restaurantId AND o.id = :orderId")
+    Optional<OrderPersistence> findOrderByRestaurant(Long restaurantId, Long orderId);
+
 
 }
