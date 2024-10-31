@@ -18,16 +18,14 @@ public class UserRoleService {
 
     private final UserRolesRepository<UserRolePersistence> userRolesRepository;
     private final UserRepository<UserPersistence> userRepository;
-    private final View error;
 
     @Autowired
     public UserRoleService(
             @Qualifier("jpa") UserRolesRepository<UserRolePersistence> userRolesRepository,
-            @Qualifier("jpa") UserRepository<UserPersistence> userRepository,
-            View error){
-        this.userRolesRepository = userRolesRepository;
-        this.userRepository = userRepository;
-        this.error = error;
+            @Qualifier("jpa") UserRepository<UserPersistence> userRepository
+            ){
+            this.userRolesRepository = userRolesRepository;
+            this.userRepository = userRepository;
     }
 
     public UserRole findUserRole(UserRoleEnum userRoleEnum) {
@@ -47,19 +45,21 @@ public class UserRoleService {
         return UserRolePersistence.convertUserRolePersistenceToUserRole(userRolePersistence);
     }
 
-    public void addRoleToUser(User user, UserRoleEnum userRoleEnum, String messageError){
+    @Transactional
+    public void addRoleToUser(User user, UserRoleEnum userRoleEnum){
         UserRole userRole = this.findUserRole(userRoleEnum);
         if(user.getUserRoles().contains(userRole)){
-            throw new IllegalArgumentException(messageError);
+            throw new IllegalArgumentException("User already has this role");
         }
         user.addUserRole(userRole);
         this.userRepository.save(UserPersistence.convertUserToUserPersistence(user));
     }
 
-    public void removeRoleToUser(User user, UserRoleEnum userRoleEnum, String messageError){
+    @Transactional
+    public void removeRoleToUser(User user, UserRoleEnum userRoleEnum){
         UserRole userRole = this.findUserRole(userRoleEnum);
         if(!user.getUserRoles().contains(userRole)){
-            throw new IllegalArgumentException(messageError);
+            throw new IllegalArgumentException("User does not have this role");
         }
         user.getUserRoles().remove(userRole);
         this.userRepository.save(UserPersistence.convertUserToUserPersistence(user));

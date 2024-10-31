@@ -15,7 +15,7 @@ public class UserService {
 
     @Autowired
     public UserService(
-            @Qualifier("jpa") UserRepository<UserPersistence> userRepository,
+            @Qualifier("jpa") UserRepository<UserPersistence> userRepository
     ){
             this.userRepository = userRepository;
     }
