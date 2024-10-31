@@ -17,6 +17,7 @@ public class ProductUseCase {
     private final FindProductsByRestaurant findProductsByRestaurant;
     private final FindProductsByRestaurantAndName findProductsByRestaurantAndName;
     private final FindProductsByRestaurantAndCategory findProductsByRestaurantAndCategory;
+    private final UpdateProductStatus updateProductStatus;
 
     @Autowired
     public ProductUseCase(
@@ -25,7 +26,8 @@ public class ProductUseCase {
             FindProductByRestaurant findProductByRestaurant,
             FindProductsByRestaurant findProductsByRestaurant,
             FindProductsByRestaurantAndName findProductsByRestaurantAndName,
-            FindProductsByRestaurantAndCategory findProductsByRestaurantAndCategory
+            FindProductsByRestaurantAndCategory findProductsByRestaurantAndCategory,
+            UpdateProductStatus updateProductStatus
     ){
             this.createProduct = createProduct;
             this.deleteProduct = deleteProduct;
@@ -33,6 +35,7 @@ public class ProductUseCase {
             this.findProductsByRestaurant = findProductsByRestaurant;
             this.findProductsByRestaurantAndName = findProductsByRestaurantAndName;
             this.findProductsByRestaurantAndCategory = findProductsByRestaurantAndCategory;
+            this.updateProductStatus = updateProductStatus;
     }
 
     public Product createProductUseCase(ProductRequest productRequest){
@@ -57,6 +60,10 @@ public class ProductUseCase {
 
     public List<Product> findProductsByRestaurantAndCategoryUseCase(Long restaurantId, Long categoryId, int page, int size){
         return this.findProductsByRestaurantAndCategory.execute(restaurantId, categoryId, page, size);
+    }
+
+    public void updateProductStatusUseCase(Long restaurantId, Long productId, Boolean status){
+        this.updateProductStatus.execute(restaurantId, productId, status);
     }
 
 }

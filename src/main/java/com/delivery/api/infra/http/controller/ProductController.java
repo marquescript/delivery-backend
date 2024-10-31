@@ -55,4 +55,10 @@ public class ProductController {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
+    @PutMapping("/{restaurantId}/product/{productId}/change-status")
+    public ResponseEntity<Void> updateProductStatus(@PathVariable Long restaurantId, @PathVariable Long productId, @RequestBody Boolean status){
+        this.productUseCase.updateProductStatusUseCase(restaurantId, productId, status);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
 }
