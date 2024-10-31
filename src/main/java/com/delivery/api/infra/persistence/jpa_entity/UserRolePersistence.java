@@ -1,5 +1,6 @@
 package com.delivery.api.infra.persistence.jpa_entity;
 
+import com.delivery.api.domain.entity.UserRole;
 import com.delivery.api.domain.enums.UserRoleEnum;
 import jakarta.persistence.*;
 
@@ -27,6 +28,14 @@ public class UserRolePersistence {
     }
 
     public UserRolePersistence() {}
+
+    public static UserRolePersistence convertUserRoleToUserRolePersistence(UserRole userRole) {
+        return new UserRolePersistence(userRole.getId(), userRole.getUserRole());
+    }
+
+    public static UserRole convertUserRolePersistenceToUserRole(UserRolePersistence userRolePersistence) {
+        return new UserRole(userRolePersistence.getId(), userRolePersistence.getUserRoleEnum());
+    }
 
     public void addUserPersistence(UserPersistence userPersistence) {
         this.userPersistences.add(userPersistence);

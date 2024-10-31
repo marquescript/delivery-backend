@@ -1,5 +1,6 @@
 package com.delivery.api.infra.persistence.jpa_entity;
 
+import com.delivery.api.domain.entity.User;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
@@ -46,6 +47,32 @@ public class UserPersistence {
 
     public void addUserRolePersistence(UserRolePersistence userRolePersistence) {
         this.userRolePersistences.add(userRolePersistence);
+    }
+
+    public static UserPersistence convertUserToUserPersistence(User user) {
+        UserPersistence userPersistence = new UserPersistence(
+                user.getId(),
+                user.getName(),
+                user.getEmail(),
+                user.getPassword(),
+                user.getCpf(),
+                user.getPhoneNumber()
+        );
+        user.getUserRoles().forEach(role -> userPersistence.addUserRolePersistence(UserRolePersistence.convertUserRoleToUserRolePersistence(role)));
+        return userPersistence;
+    }
+
+    public static User convertUserPersistenceToUser(UserPersistence userPersistence) {
+        User user = new User(
+                userPersistence.getId(),
+                userPersistence.getName(),
+                userPersistence.getEmail(),
+                userPersistence.getPassword(),
+                userPersistence.getCpf(),
+                userPersistence.getPhoneNumber()
+        );
+        userPersistence.getUserRolePersistences().forEach(role -> user.addUserRole(UserRolePersistence.convertUserRolePersistenceToUserRole(role)));
+        return user;
     }
 
     public UserPersistence() {}
