@@ -46,7 +46,7 @@ public class OrderService {
             return totalItemPrice;
         }).reduce(0.0, Double::sum);
 
-        Double shippingFee = calculateShipingFee(restaurant, order);
+        Double shippingFee = calculateShippingFee(restaurant, order);
 
         order.setSubTotal(subTotalOrder);
         order.setShippingFee(shippingFee);
@@ -59,7 +59,7 @@ public class OrderService {
 
     }
 
-    private static Double calculateShipingFee(Restaurant restaurant, Order order){
+    private static Double calculateShippingFee(Restaurant restaurant, Order order){
         return 0.0;
     }
 
