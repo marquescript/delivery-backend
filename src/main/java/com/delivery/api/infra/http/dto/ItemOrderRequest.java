@@ -34,4 +34,13 @@ public record ItemOrderRequest(
         );
     }
 
+    public static ItemOrderRequest convertEntityToDto(ItemOrder itemOrder){
+        return new ItemOrderRequest(
+                itemOrder.getId(),
+                itemOrder.getQuantity(),
+                itemOrder.getObservation(),
+                null
+        );
+    }
+
 }

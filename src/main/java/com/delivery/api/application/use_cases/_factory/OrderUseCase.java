@@ -5,6 +5,7 @@ import com.delivery.api.application.use_cases.order.FindOrderByRestaurant;
 import com.delivery.api.application.use_cases.order.FindOrdersByRestaurant;
 import com.delivery.api.domain.entity.Order;
 import com.delivery.api.infra.http.dto.OrderRequest;
+import com.delivery.api.infra.http.dto.OrderResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -28,11 +29,11 @@ public class OrderUseCase {
             this.createOrder = createOrder;
     }
 
-    public List<Order> findOrdersByRestaurantUseCase(Long restaurantId, int page, int size){
+    public List<OrderResponse> findOrdersByRestaurantUseCase(Long restaurantId, int page, int size){
         return this.findOrdersByRestaurant.execute(restaurantId, page, size);
     }
 
-    public Order findOrderByRestaurantUseCase(Long restaurantId, Long orderId){
+    public OrderResponse findOrderByRestaurantUseCase(Long restaurantId, Long orderId){
         return this.findOrderByRestaurant.execute(restaurantId, orderId);
     }
 

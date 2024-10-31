@@ -17,7 +17,7 @@ import java.util.Optional;
 @Qualifier("jpa")
 public interface OrderRepositoryJpa extends JpaRepository<OrderPersistence, Long>, OrderRepository<OrderPersistence> {
 
-    @Query("FROM OrderPersistence o WHERE o.restaurantPersistence.id = :restaurantId ORDER BY o.creationDate ASC")
+    @Query("FROM OrderPersistence o JOIN FETCH o.userPersistence JOIN FETCH o.restaurantPersistence r JOIN FETCH r.kitchenPersistence WHERE o.restaurantPersistence.id = :restaurantId ORDER BY o.creationDate ASC")
     List<OrderPersistence> findOrdersByRestaurant(Long restaurantId, Pageable pageable);
 
     @Override

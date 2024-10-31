@@ -2,6 +2,7 @@ package com.delivery.api.application.use_cases.order;
 
 import com.delivery.api.application.service.OrderService;
 import com.delivery.api.domain.entity.Order;
+import com.delivery.api.infra.http.dto.OrderResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -19,8 +20,9 @@ public class FindOrdersByRestaurant {
             this.orderService = orderService;
     }
 
-    public List<Order> execute(Long restaurantId, int page, int size){
-        return this.orderService.findOrdersByRestaurant(restaurantId, page, size);
+    public List<OrderResponse> execute(Long restaurantId, int page, int size){
+        List<Order> orders = this.orderService.findOrdersByRestaurant(restaurantId, page, size);
+        return orders.stream().map(OrderResponse::convertEntityToDto).toList();
     }
 
 }

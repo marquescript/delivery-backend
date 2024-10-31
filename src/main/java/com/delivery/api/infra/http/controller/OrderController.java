@@ -3,6 +3,7 @@ package com.delivery.api.infra.http.controller;
 import com.delivery.api.application.use_cases._factory.OrderUseCase;
 import com.delivery.api.domain.entity.Order;
 import com.delivery.api.infra.http.dto.OrderRequest;
+import com.delivery.api.infra.http.dto.OrderResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,15 +25,15 @@ public class OrderController {
     }
 
     @GetMapping("/{restaurantId}/order")
-    public ResponseEntity<List<Order>> findOrdersByRestaurant(@PathVariable Long restaurantId, @RequestParam(value = "page", defaultValue = "0") int page,
-                                                              @RequestParam(value = "size", defaultValue = "0") int size){
-        List<Order> orders = this.orderUseCase.findOrdersByRestaurantUseCase(restaurantId, page, size);
+    public ResponseEntity<List<OrderResponse>> findOrdersByRestaurant(@PathVariable Long restaurantId, @RequestParam(value = "page", defaultValue = "0") int page,
+                                                                      @RequestParam(value = "size", defaultValue = "0") int size){
+        List<OrderResponse> orders = this.orderUseCase.findOrdersByRestaurantUseCase(restaurantId, page, size);
         return ResponseEntity.status(HttpStatus.OK).body(orders);
     }
 
     @GetMapping("/{restaurantId}/order/{orderId}")
-    public ResponseEntity<Order> getOrder(@PathVariable Long restaurantId, @PathVariable Long orderId){
-        Order order = this.orderUseCase.findOrderByRestaurantUseCase(restaurantId, orderId);
+    public ResponseEntity<OrderResponse> getOrder(@PathVariable Long restaurantId, @PathVariable Long orderId){
+        OrderResponse order = this.orderUseCase.findOrderByRestaurantUseCase(restaurantId, orderId);
         return ResponseEntity.status(HttpStatus.OK).body(order);
     }
 
