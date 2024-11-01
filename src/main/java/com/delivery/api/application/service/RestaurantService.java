@@ -1,6 +1,7 @@
 package com.delivery.api.application.service;
 
 import com.delivery.api.domain.entity.Restaurant;
+import com.delivery.api.domain.entity.User;
 import com.delivery.api.domain.exception.EntityNotFound;
 import com.delivery.api.domain.repository.RestaurantRepository;
 import com.delivery.api.infra.persistence.jpa_entity.RestaurantPersistence;
@@ -61,6 +62,15 @@ public class RestaurantService {
         RestaurantPersistence restaurantPersistence = RestaurantPersistence.convertRestaurantToRestaurantPersistence(restaurant);
         restaurantPersistence = this.restaurantRepository.save(restaurantPersistence);
         return RestaurantPersistence.convertRestaurantPersistenceToRestaurant(restaurantPersistence);
+    }
+
+    public void addEmployeeToRestaurant(Restaurant restaurant, User user){
+        if(restaurant.getUsers().contains(user)){
+            throw new IllegalArgumentException("This user is already an employee of the company");
+        }
+        restaurant.addUsers(user);
+        RestaurantPersistence restaurantPersistence = RestaurantPersistence.convertRestaurantToRestaurantPersistence(restaurant);
+        this.restaurantRepository.save(restaurantPersistence);
     }
 
 }
