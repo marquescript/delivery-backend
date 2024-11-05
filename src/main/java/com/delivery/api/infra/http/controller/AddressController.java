@@ -10,18 +10,22 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/address")
 public class AddressController {
 
     private final AddressUseCase addressUseCase;
+    private final GoogleMapsClient googleMapsClient;
 
     @Autowired
     public AddressController(
-            AddressUseCase addressUseCase
+            AddressUseCase addressUseCase,
+            GoogleMapsClient googleMapsClient
     ){
             this.addressUseCase = addressUseCase;
+            this.googleMapsClient = googleMapsClient;
     }
 
     @PostMapping
@@ -41,4 +45,7 @@ public class AddressController {
         List<String> result = this.addressUseCase.searchAddressesUseCase(query);
         return ResponseEntity.ok(result);
     }
+
+
+
 }

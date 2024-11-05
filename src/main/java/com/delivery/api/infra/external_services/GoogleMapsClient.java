@@ -62,5 +62,26 @@ public class GoogleMapsClient implements AddressProvider {
         return addresses;
     }
 
+    public Optional<String> getAddressFromCoordinates(double latitude, double longitude) {
+        String url = String.format(
+                "https://maps.googleapis.com/maps/api/geocode/json?latlng=%s,%s&key=%s",
+                latitude, longitude, apiKey
+        );
+
+        try {
+            String response = restTemplate.getForObject(url, String.class);
+            ObjectMapper mapper = new ObjectMapper();
+            JsonNode root = mapper.readTree(response);
+            JsonNode results = root.path("results");
+
+            if (results.isArray() && !results.isEmpty()) {
+                return Optional.of(results.get(0).path("formatted_address").asText());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return Optional.empty();
+    }
 
 }
