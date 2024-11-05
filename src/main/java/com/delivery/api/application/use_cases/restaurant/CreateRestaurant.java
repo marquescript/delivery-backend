@@ -43,6 +43,7 @@ public class CreateRestaurant {
         restaurant = this.restaurantService.createRestaurant(restaurant);
         User user = this.userService.findUser(restaurant.getUsers().get(0).getId());
         this.userRoleService.addRoleToUser(user, UserRoleEnum.RESTAURANT_OWNER);
+        return restaurant;
     }
 
 }

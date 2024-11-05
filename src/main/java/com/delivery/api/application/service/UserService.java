@@ -1,6 +1,8 @@
 package com.delivery.api.application.service;
 
 import com.delivery.api.domain.entity.User;
+import com.delivery.api.domain.entity.UserRole;
+import com.delivery.api.domain.enums.UserRoleEnum;
 import com.delivery.api.domain.exception.CpfAlreadyRegistered;
 import com.delivery.api.domain.exception.EmailAlreadyRegistered;
 import com.delivery.api.domain.exception.EntityNotFound;
@@ -11,6 +13,8 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 
 @Service
@@ -104,5 +108,8 @@ public class UserService {
     }
 
 
+    public void deleteUser(User user){
+        this.userRepository.deleteById(user.getId());
+    }
 
 }
