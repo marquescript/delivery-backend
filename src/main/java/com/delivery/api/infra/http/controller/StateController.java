@@ -30,8 +30,8 @@ public class StateController {
 
     @Operation(summary = "Find a State")
     @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "State found successfully", content = @Content(schema = @Schema(implementation = State.class))),
-            @ApiResponse(responseCode = "400", description = "State not found")
+            @ApiResponse(responseCode = "200", description = "State found successfully", content = @Content(mediaType = "application/json", schema = @Schema(implementation = StateRequest.class))),
+            @ApiResponse(responseCode = "400", description = "State not found", content = @Content())
     })
     @GetMapping("/{stateId}")
     public ResponseEntity<State> findState(@PathVariable Long stateId){
