@@ -14,17 +14,14 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/address")
 public class AddressController {
-    private final GoogleMapsClient googlePlacesService;
 
     private final AddressUseCase addressUseCase;
 
     @Autowired
     public AddressController(
-            AddressUseCase addressUseCase,
-            GoogleMapsClient googlePlacesService
+            AddressUseCase addressUseCase
     ){
             this.addressUseCase = addressUseCase;
-            this.googlePlacesService = googlePlacesService;
     }
 
     @PostMapping
@@ -39,9 +36,9 @@ public class AddressController {
         return ResponseEntity.status(HttpStatus.OK).body(address);
     }
 
-    @GetMapping("/place")
-    public ResponseEntity<List<String>> findPlace(@RequestParam String query){
-        List<String> result = this.googlePlacesService.searchAddresses(query);
+    @GetMapping("/search-addresses")
+    public ResponseEntity<List<String>> searchAddresses(@RequestParam String query){
+        List<String> result = this.addressUseCase.searchAddressesUseCase(query);
         return ResponseEntity.ok(result);
     }
 }
