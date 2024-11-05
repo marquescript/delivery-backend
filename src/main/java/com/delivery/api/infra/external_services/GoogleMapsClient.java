@@ -1,8 +1,8 @@
 package com.delivery.api.infra.external_services;
 
 import com.delivery.api.domain.providers.AddressProvider;
+import com.delivery.api.infra.http.dto.TravelInfo;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -14,10 +14,7 @@ import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @Qualifier("google-client")
@@ -82,6 +79,29 @@ public class GoogleMapsClient implements AddressProvider {
         }
 
         return Optional.empty();
+    }
+
+    public TravelInfo getDistanceAndTimeBetweenTwoAddresses(String origin, String destination) {
+        String url = String.format(
+                "https://maps.googleapis.com/maps/api/distancematrix/json?origins=%s&destinations=%s&units=metric&key=%s",
+                origin, destination, apiKey
+        );
+
+        try {
+            ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);
+            ObjectMapper mapper = new ObjectMapper();
+            JsonNode root = mapper.readTree(response.getBody());
+
+            JsonNode elementNode = root.path("rows").get(0).path("elements").get(0);
+
+            double distanceInKm = elementNode.path("distance").path("value").asDouble() / 1000;
+            double travelTimeInMinutes = elementNode.path("duration").path("value").asDouble() / 60;
+
+            return new TravelInfo(distanceInKm, travelTimeInMinutes);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException("Erro ao calcular a distância e tempo");
+        }
     }
 
 }

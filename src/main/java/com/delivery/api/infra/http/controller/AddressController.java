@@ -46,6 +46,10 @@ public class AddressController {
         return ResponseEntity.ok(result);
     }
 
-
+    @GetMapping("/coordinates")
+    public ResponseEntity<Double> getAddressFromCoordinates(@RequestParam String origem, @RequestParam String destino){
+        Double result =  this.googleMapsClient.getDistanceBetweenTwoAddresses(origem, destino);
+        return ResponseEntity.ok(result);
+    }
 
 }
