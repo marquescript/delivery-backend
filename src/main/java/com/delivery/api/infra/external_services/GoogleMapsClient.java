@@ -104,5 +104,31 @@ public class GoogleMapsClient implements AddressProvider {
         }
     }
 
+    @Override
+    public Double[] getCoordinatesFromAddress(String address) {
+
+        String urlString = "https://maps.googleapis.com/maps/api/geocode/json?address=" +
+                address.replace(" ", "+") + "&key=" + apiKey;
+
+        try{
+            String response = restTemplate.getForObject(urlString, String.class);
+
+            ObjectMapper mapper = new ObjectMapper();
+            JsonNode root = mapper.readTree(response);
+            JsonNode results = root.path("results");
+
+            if(results.isArray() && !results.isEmpty()){
+                JsonNode location = results.get(0).path("geometry").path("location");
+                double latitude = location.path("lat").asDouble();
+                double longitude = location.path("lng").asDouble();
+
+                return new Double[]{latitude,longitude};
+            }
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
+    }
 
 }
