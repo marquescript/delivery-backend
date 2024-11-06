@@ -25,7 +25,8 @@ public record RestaurantRequest(
         KitchenRequest kitchen,
 
         @Valid
-        @ConvertGroup(from = Default.class, to = GroupsValidation.GetAddressId.class)
+        @ConvertGroup(from = Default.class, to = GroupsValidation.CreateRestaurantValidation.class)
+        @NotNull(groups = GroupsValidation.GetAddressId.class)
         AddressRequest address
 ) {
 

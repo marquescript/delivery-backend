@@ -3,9 +3,11 @@ package com.delivery.api.infra.http.controller;
 import com.delivery.api.application.use_cases._factory.RestaurantUseCase;
 import com.delivery.api.domain.entity.Restaurant;
 import com.delivery.api.infra.http.dto.RestaurantRequest;
+import com.delivery.api.infra.http.handler.validation.GroupsValidation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -45,7 +47,7 @@ public class RestaurantController {
     }
 
     @PostMapping
-    public ResponseEntity<Restaurant> createRestaurant(@RequestBody RestaurantRequest restaurantRequest){
+    public ResponseEntity<Restaurant> createRestaurant(@RequestBody @Validated(GroupsValidation.CreateRestaurantValidation.class) RestaurantRequest restaurantRequest){
         Restaurant restaurant = this.restaurantUseCase.createRestaurantUseCase(restaurantRequest);
         return ResponseEntity.status(HttpStatus.CREATED).body(restaurant);
     }

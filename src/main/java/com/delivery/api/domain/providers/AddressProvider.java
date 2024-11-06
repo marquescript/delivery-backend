@@ -5,7 +5,8 @@ import java.util.Optional;
 
 public interface AddressProvider {
 
-    public List<String> searchAddresses(String query);
+    List<String> searchAddresses(String query);
     Optional<String> getAddressFromCoordinates(double latitude, double longitude);
+    Double[] getCoordinatesFromAddress(String address);
 
 }

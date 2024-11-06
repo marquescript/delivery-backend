@@ -14,18 +14,18 @@ public record AddressRequest(
         @NotNull(groups = GroupsValidation.GetAddressId.class)
         Long id,
 
-        @Size(min = 8, max = 8)
+        @Size(groups = GroupsValidation.CreateRestaurantValidation.class, min = 8, max = 8)
         String cep,
 
-        @NotBlank
+        @NotBlank(groups = GroupsValidation.CreateRestaurantValidation.class)
         String publicPlace,
 
-        @NotBlank
+        @NotBlank(groups = GroupsValidation.CreateRestaurantValidation.class)
         String number,
 
         String complement,
 
-        @NotBlank
+        @NotBlank(groups = GroupsValidation.CreateRestaurantValidation.class)
         String neighborhood,
 
         @Valid

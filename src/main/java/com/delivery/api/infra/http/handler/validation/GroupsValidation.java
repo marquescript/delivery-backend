@@ -9,4 +9,5 @@ public interface GroupsValidation {
     public interface GetCategoryProductId{};
     public interface GetRestaurantId{}
     public interface GetProductId{};
+    public interface CreateRestaurantValidation{};
 }
