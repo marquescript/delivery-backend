@@ -37,5 +37,16 @@ public class AddressService {
         return AddressPersistence.convertAddressPersistenceToAddress(addressPersistence);
     }
 
+    // Fórmula de Haversine para calcular a distância entre duas coordenadas geográficas
+    public Double calculateDsitanceBetweenTwoCoordinates(Double latitude1, Double longitude1, Double latitude2, Double longitude2){
+        final int RAIO = 6371;
+
+        double latitudeDistance = Math.toRadians(latitude2 - latitude1);
+        double longitudeDistance = Math.toRadians(longitude2 - longitude1);
+        double a = Math.sin(latitudeDistance / 2) * Math.sin(latitudeDistance / 2) + Math.cos(Math.toRadians(latitude1))
+                * Math.cos(Math.toRadians(latitude2)) * Math.sin(longitudeDistance / 2) * Math.sin(longitudeDistance / 2);
+        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        return RAIO * c;
+    }
 
 }
