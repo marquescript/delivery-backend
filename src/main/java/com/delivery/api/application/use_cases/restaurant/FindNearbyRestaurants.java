@@ -3,6 +3,7 @@ package com.delivery.api.application.use_cases.restaurant;
 import com.delivery.api.application.service.AddressService;
 import com.delivery.api.application.service.RestaurantService;
 import com.delivery.api.domain.entity.Restaurant;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -29,7 +30,7 @@ public class FindNearbyRestaurants {
         List<Restaurant> nearbyRestaurants = new ArrayList<>();
 
         allRestaurants.forEach(restaurant -> {
-            double distance = this.addressService.calculateDsitanceBetweenTwoCoordinates(latitude, longitude, restaurant.latitude, restaurant.longitude)
+            double distance = this.addressService.calculateDsitanceBetweenTwoCoordinates(latitude, longitude, restaurant.getLatitude(), restaurant.getLongitude());
             if(distance <= maxDistance){
                 nearbyRestaurants.add(restaurant);
             }

@@ -11,6 +11,8 @@ public class Restaurant {
     private String name;
     private Double shippingFee;
     private Boolean active;
+    private Double latitude;
+    private Double longitude;
     private Kitchen kitchen;
     private Address address;
     private List<User> users = new ArrayList<>();
@@ -19,11 +21,13 @@ public class Restaurant {
 
     public Restaurant() {}
 
-    public Restaurant(Long id, String name, Double shippingFee, Boolean active, Kitchen kitchen, Address address) {
+    public Restaurant(Long id, String name, Double shippingFee, Boolean active, Double latitude, Double longitude, Kitchen kitchen, Address address) {
         this.id = id;
         this.name = name;
         this.shippingFee = shippingFee;
         this.active = active;
+        this.latitude = latitude;
+        this.longitude = longitude;
         this.kitchen = kitchen;
         this.address = address;
     }
@@ -96,4 +100,19 @@ public class Restaurant {
         return products;
     }
 
+    public Double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(Double latitude) {
+        this.latitude = latitude;
+    }
+
+    public Double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(Double longitude) {
+        this.longitude = longitude;
+    }
 }

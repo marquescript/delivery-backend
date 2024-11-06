@@ -22,6 +22,10 @@ public class RestaurantPersistence {
 
     private Boolean active;
 
+    private Double latitude;
+
+    private Double longitude;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "kitchen_id")
     private KitchenPersistence kitchenPersistence;
@@ -38,11 +42,13 @@ public class RestaurantPersistence {
     @OneToMany(mappedBy = "restaurantPersistence")
     private List<ProductPersistence> productPersistences = new ArrayList<>();
 
-    public RestaurantPersistence(Long id, String name, Double shippingFee, Boolean active, KitchenPersistence kitchenPersistence, AddressPersistence addressPersistence) {
+    public RestaurantPersistence(Long id, String name, Double shippingFee, Boolean active, Double latitude, Double longitude, KitchenPersistence kitchenPersistence, AddressPersistence addressPersistence) {
         this.id = id;
         this.name = name;
         this.shippingFee = shippingFee;
         this.active = active;
+        this.latitude = latitude;
+        this.longitude = longitude;
         this.kitchenPersistence = kitchenPersistence;
         this.addressPersistence = addressPersistence;
     }
@@ -50,6 +56,7 @@ public class RestaurantPersistence {
     public static RestaurantPersistence convertRestaurantToRestaurantPersistence(Restaurant restaurant) {
         return new RestaurantPersistence(
                 restaurant.getId(), restaurant.getName(), restaurant.getShippingFee(), restaurant.getActive(),
+                restaurant.getLatitude(), restaurant.getLongitude(),
                 KitchenPersistence.convertKitchenToKitchenPersistence(restaurant.getKitchen()),
                 AddressPersistence.convertAddressToAddressPersistence(restaurant.getAddress())
         );
@@ -58,7 +65,8 @@ public class RestaurantPersistence {
     public static Restaurant convertRestaurantPersistenceToRestaurant(RestaurantPersistence restaurantPersistence) {
         return new Restaurant(
                 restaurantPersistence.getId(), restaurantPersistence.getName(), restaurantPersistence.getShippingFee(),
-                restaurantPersistence.getActive(), KitchenPersistence.convertKitchenPersistenceToKitchen(restaurantPersistence.getKitchenPersistence()),
+                restaurantPersistence.getActive(), restaurantPersistence.getLatitude(), restaurantPersistence.getLongitude(),
+                KitchenPersistence.convertKitchenPersistenceToKitchen(restaurantPersistence.getKitchenPersistence()),
                 AddressPersistence.convertAddressPersistenceToAddress(restaurantPersistence.getAddressPersistence())
         );
     }
@@ -129,4 +137,11 @@ public class RestaurantPersistence {
         return productPersistences;
     }
 
+    public Double getLatitude() {
+        return latitude;
+    }
+
+    public Double getLongitude() {
+        return longitude;
+    }
 }
